@@ -1,0 +1,62 @@
+version: '2.27.0'
+
+services:
+
+  db:
+    image: mariadb
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secrET123#@
+     
+    volumes:
+      - './dbvol/:/var/lib/mysql'
+      - ./dbscript:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - prithak_net
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: secrET123#@
+    depends_on:
+      - db
+    networks:
+      - prithak_net
+
+  backend:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    ports:
+      - "3000:3001"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+    networks:
+      - prithak_net
+
+  frontend:
+    build:
+      context: ./frontend
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    depends_on:
+      - backend
+    networks:
+      - prithak_net
+
+networks:
+  prithak_net:
+    driver: bridge
+
+
+
+    #docker run -d --name phpmyadmin --network prithak_default -p 8080:80 phpmyadmin

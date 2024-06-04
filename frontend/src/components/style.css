@@ -1,0 +1,68 @@
+@media (max-width: 968px) {
+  .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+
+  }
+
+  .col-md-8 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+.searchbox
+{
+  margin: -5px;
+  padding: 0px;
+  width: 100%;
+  margin: 0;
+  margin-bottom: -10px!important;
+  margin-left: 10px!important;
+  margin-right: 10px!important;
+}
+.search-btn
+{
+  margin-bottom: 5px;
+  float: right;
+}
+  .col-md-8 .container {
+
+    margin: 0;
+    padding: 10px;
+  }
+
+  .card {
+    margin: 0;
+  }
+
+  .card-body {
+    padding: 15px;
+  }
+}
+
+.custom-pagination {
+  font-size: 16px;
+}
+.disabled-container {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+@media (max-width: 576px) {
+  .custom-pagination {
+    font-size: 14px;
+    padding: 0.5rem;
+  }
+}
+.shadow-box {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 5px;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.shadow-box:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
