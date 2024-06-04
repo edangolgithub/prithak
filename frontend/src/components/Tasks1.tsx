@@ -6,6 +6,7 @@ import { Task } from '@/interfaces/Task';
 import TaskDetail from './TaskDetail';
 import './style.css';
 import AddTaskForm from './TaskAdd';
+import { Button, Modal } from 'react-bootstrap';
 
 const Tasks1 = () => {
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
@@ -14,9 +15,10 @@ const Tasks1 = () => {
     const tasksPerPage = 5;
     const [canSearch, setCanSearch] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const dispatch = useAppDispatch();
     const tasksState = useSelector((state: RootState) => state.tasks);
-    
+
     useEffect(() => {
         dispatch(fetchTasks(currentPage, tasksPerPage));
         setCanSearch(searchTerm.trim().length > 0);
@@ -28,7 +30,7 @@ const Tasks1 = () => {
             setSelectedTask(tasksState.tasks[0]);
         }
     }, [tasksState.tasks, selectedTask]);
-   
+
     const totalPages = Math.ceil(tasksState.totalTasks / tasksPerPage) || 1;
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
@@ -43,14 +45,22 @@ const Tasks1 = () => {
     const handleTaskClick = (task: Task) => {
         setSelectedTask(task);
     };
-
+    const handleShowModal = () => setShowModal(true);
+    const handleCloseModal = () => setShowModal(false);
     return (
         <div className={`container mt-4`}>
             <div className="row align-items-center">
-                <div className="col-md-4">
-                    <h1 className="text-center mb-4">Task List</h1>
+                <div className="col-md-2">
+                    <h3 className={`text-center ${isEditing ? 'dc' : ''}`}>Task List</h3>
+                   
                 </div>
-                <div className={`col-md-4 m-4 mb-1 searchbox ${isEditing ? 'disabled-container' : ''}`}>
+                <div className="col-md-2">
+                        <Button  className='float-end' variant="primary" onClick={handleShowModal} disabled={isEditing}>
+                            Add Task
+                        </Button>
+                    </div>
+
+                <div className={`col-md-4 m-4 mb-1 searchbox ${isEditing ? 'dc' : ''}`}>
                     <input
                         type="text"
                         className="form-control mb-3"
@@ -71,6 +81,7 @@ const Tasks1 = () => {
                     <button
                         className="btn btn-success search-btn mx-2"
                         onClick={reset}
+                        disabled={isEditing}
                     >
                         Reset
                     </button>
@@ -78,7 +89,7 @@ const Tasks1 = () => {
             </div>
 
             <div className={`row`}>
-                <div className={`col-md-4 ${isEditing ? 'disabled-container' : ''}`}>
+                <div className={`col-md-4 ${isEditing ? 'dc' : ''}`}>
                     {filteredTasks.length > 0 ? (
                         <div>
                             <ul className="list-group">
@@ -115,9 +126,20 @@ const Tasks1 = () => {
                 </div>
             </div>
 
-            <div className={`mt-4 ${isEditing ? 'disabled-container' : ''}`}>
-                <AddTaskForm />
-            </div>
+
+            <Modal show={showModal} onHide={handleCloseModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add Task</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <AddTaskForm />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 };
