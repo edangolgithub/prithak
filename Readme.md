@@ -23,11 +23,11 @@ This project is a full-stack application with a React frontend, NestJS backend, 
 ### 1. Clone the Repository
 
 Clone the repository to your local machine:
-
+copy code below and paste in your terminal and hit ENTER.
 ```bash
 git clone https://github.com/edangolgithub/prithak.git
 cd prithak
-docker-compose up --build
+docker-compose up
 ```
 ### Access the Application
 
