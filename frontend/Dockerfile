@@ -1,27 +1,34 @@
-# Use a smaller base image for production
-FROM node:16-alpine AS builder
+# 1st step: The build
 
+# Here we state that we will be using the node 16.10 version as the base image
+FROM node:18 as build
+# We define /app as our working directory -where our incoming commands will be executed-
 WORKDIR /app
 
-# Copy package.json and yarn.lock (if using Yarn) to optimize caching
-COPY package*.json ./
-COPY yarn*.lock ./
+# We copy our package.json and yarn.lock (adapt if you are using npm to package-lock.json) into our workdir
+COPY package.json ./
+COPY yarn.lock ./
 
-# Install dependencies in a separate stage for efficiency
-RUN npm ci --production  # Use npm ci for deterministic installs
+# We install our dependencies
+RUN yarn
+# We install react-scripts globally to avoid any bad surprise
+#RUN yarn add react-scripts@3.4.1 -g
 
-# Create a slimmer production image
-FROM node:16-alpine
+# COPY our app
+COPY . ./
 
-WORKDIR /app
+# And we build! -yarn comes with the node:16.10 image-
+RUN yarn run build
 
-COPY --from=builder /app/node_modules ./
-COPY . .
+# ... Step 1
 
-# Build the React app in a separate stage
-RUN npm run build
-
-RUN npm install -g serve
-EXPOSE 3000
-
-CMD ["serve", "-s", "build"]
+# Always good to repeat, we use nginx:stable-alpine as our base image
+FROM nginx:stable-alpine
+# Taking advantages from docker multi-staging, we copy our newly generated build from /app to the nginx html folder -entrypoint of the webserver-
+COPY --from=build /app/build /usr/share/nginx/html
+# We copy the nginx conf file from our machine to our image
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+# We expose the port 80 of the future containers
+EXPOSE 80
+# And finally we can run the nginx command to start the server
+CMD ["nginx", "-g", "daemon off;"]
