@@ -25,8 +25,8 @@ This project is a full-stack application with a React frontend, NestJS backend, 
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/my-fullstack-app.git
-cd my-fullstack-app
+git clone https://github.com/edangolgithub/prithak.git
+cd prithak
 docker-compose up --build
 ```
 ### Access the Application
