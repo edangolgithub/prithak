@@ -31,7 +31,7 @@ docker-compose up --build
 ```
 ### Access the Application
 
-* **Frontend**: [http://localhost:3001](http://localhost:3001)
+* **Frontend**: [http://localhost:81](http://localhost:81)
 * **Backend**: [http://localhost:3000](http://localhost:3000)
 * **phpMyAdmin**: [http://localhost:8080](http://localhost:8080) (use `root` and `secrET123#@` as username and password)
 
