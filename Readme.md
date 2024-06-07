@@ -52,6 +52,11 @@ docker-compose up
 * New users can be regisrtered and roles can be assigned(To avoid too much complication, I left it like this).
 * Only users with the role of admin can delete tasks. The backend checks the role in the JWT token before allowing the delete operation.
 
+#### Validation:
+
+* Adding Task has validation implemented using formik and Yup.
+
+
 #### User Management:
 
 * The application allows users to register and login.
@@ -61,3 +66,4 @@ docker-compose up
 
 * Users can create, read, update, and delete tasks.
 * Tasks are displayed in a paginated list on the frontend.
+
