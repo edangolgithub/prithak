@@ -29,7 +29,7 @@ git clone https://github.com/edangolgithub/prithak.git
 cd prithak
 docker-compose up
 
-if there is issue with dbvol folder run=> sudo chown -R $USER $PWD
+if there is issue with dbvol folder run=> sudo chown -R $USER $PWD/dbvol
 
 ```
 ### Access the Application
