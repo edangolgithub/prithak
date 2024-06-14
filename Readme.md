@@ -28,6 +28,9 @@ copy code below and paste in your terminal and hit ENTER.
 git clone https://github.com/edangolgithub/prithak.git
 cd prithak
 docker-compose up
+
+if there is issue with dbvol folder run=> sudo chown -R $USER $PWD
+
 ```
 ### Access the Application
 
